@@ -70,6 +70,7 @@ class AllVar(gym.Env):
         This function loads the pickles with the function approximating the Fluent simulation data.
         """
         fname = var + ".p"
+        # what is pickle?
         pickle_path = os.path.join(self.pick_path, fname)
         [coef, powers, intercept, mins, maxes] = pickle.load(open(pickle_path, "rb"))
         # The function variables you need to-recreate this model & the min & max to set this in the environment.
