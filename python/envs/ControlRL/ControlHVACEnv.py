@@ -96,11 +96,12 @@ class AllVar(gym.Env):
     def step(self, u):
         TOUTZ1, TOUTZ2, PUE = self.state
         self.steps += 1
-        u = np.clip(u, -self.max_in_change, self.max_in_change)
+        u = np.clip(u, -self.max_in_change, self.max_in_change)  # u between (-2, 2)
         self.last_u = u  # for rendering
 
         # Increase or decrease the 5 input values
         self.ins = self.ins + u
+        # clipped between min: 5 and max: 30.
         self.ins = np.clip(self.ins, self.min_Tin, self.max_Tin)
 
         # calculate the output
@@ -148,7 +149,8 @@ class AllVar(gym.Env):
         self.episodes += 1
         self.steps = 0
 
-        # reset input and output paramaters
+        # self.ins: increase (or delta) to action variable u.
+        # self.ins is a vector in range: [5, 5, 5, 5, 5] and [30, 30, 30, 30, 30]
         self.ins = random.uniform(
             self.min_Tin * np.ones([1, no_inputs]),  # 5 x [1, 1, 1, 1, 1]
             self.max_Tin * np.ones([1, no_inputs]),  # 30 x [1, 1, 1, 1, 1]

@@ -49,11 +49,13 @@ if __name__ == "__main__":
             step += 1
             next_state, reward, done, info = env.step(action)
             Tout.append(next_state[0])
-			if not done or (score == 499):
+			if not done or score == 499:
 				reward = reward
 			else:
+				# whenver episode is done, reward is reset to -100.
 				reward = -100
-            score += reward
+            # increment score by reward at each time step.
+			score += reward
             state = next_state
             if done:
 				if score == 500:
@@ -67,5 +69,6 @@ if __name__ == "__main__":
 				# are > 490.
                 if np.mean(scores[-min(10, len(scores)) :]) > 490:
                     sys.exit()
-            if step >= 200:
+            # also exit the loop, if number of time-steps exceed 200.
+			if step >= 200:
                 sys.exit()
